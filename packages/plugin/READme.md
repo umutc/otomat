@@ -1,8 +1,8 @@
 # @dofus-remote/plugins
 ```js
 const Kernel = require('@dofus-remote/kernel')
-const AuthPlugin = require('@dofus-remote/plugins/Auth')
-const GamePlugin = require('@dofus-remote/plugins/Game')
+const AuthPlugin = require('@dofus-remote/plugin/Auth')
+const GamePlugin = require('@dofus-remote/plugin/Game')
 
 async function run() {
 

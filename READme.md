@@ -15,8 +15,8 @@ Invitation Discord: https://discord.gg/Ctg86d4
 ```js
 const Kernel = require('@dofus-remote/kernel')
 const Versions = require('@dofus-remote/versions')
-const AuthPlugin = require('@dofus-remote/plugins/Auth')
-const GamePlugin = require('@dofus-remote/plugins/Game')
+const AuthPlugin = require('@dofus-remote/plugin/Auth')
+const GamePlugin = require('@dofus-remote/plugin/Game')
 
 async function run(login, password, country, language, serverId, characterId) {
     const versions = await Versions.get(country, language)

@@ -7,7 +7,7 @@ const urls = {
     app: (country, lang) => `https://itunes.apple.com/lookup?country=${country}&id=1041406978&lang=${lang}&limit=1&t=${Date.now()}`
 }
 
-module.exports = class Versions {
+module.exports = class Version {
   static async getApp(country, lang) {
     const url = urls.app(country, lang)
     const data = await got(url).json()
