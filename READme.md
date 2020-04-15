@@ -15,19 +15,19 @@ Invitation Discord: https://discord.gg/Ctg86d4
 ```js
 const Kernel = require('@dofus-remote/kernel')
 const Versions = require('@dofus-remote/versions')
-const AuthPlugin = require('@dofus-remote/plugins/AuthPlugin')
-const GamePlugin = require('@dofus-remote/plugins/GamePlugin')
+const AuthPlugin = require('@dofus-remote/plugins/Auth')
+const GamePlugin = require('@dofus-remote/plugins/Game')
 
 async function run(login, password, country, language, serverId, characterId) {
     const versions = await Versions.get(country, language)
     const kernel = new Kernel(versions)
     kernel.plugins.add(AuthPlugin)
     kernel.plugins.add(GamePlugin)
-    kernel.clients.add(login, password, language)
+    kernel.clients.add({ login, password, language })
     kernel.plugins.flush()
-    await kernel.clients.run(Array.from(kernel.clients))
     
     for (const client of kernel.clients) {
+        await client.connect()
         await kernel.api.auth.begin(client)
         await kernel.api.auth.play(client, serverId)
         await kernel.api.game.play(client, characterId)
