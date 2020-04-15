@@ -1,10 +1,10 @@
-# @dofus-remote/versions
+# @dofus-remote/version
 ## Example
 ```js
-const versions = require('@dofus-remote/versions')
+const version = require('@dofus-remote/version')
 
 (async () => {
-    const res = await versions.getVersions()
+    const res = await version.getVersions()
     
     console.log('appVersion', res.appVersion)
     console.log('buildVersion', res.buildVersion)
