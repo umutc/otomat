@@ -7,6 +7,7 @@ Invitation Discord: https://discord.gg/Ctg86d4
 ## Packages
 - `ignitor` -> CLI permettant l'orchestration de vos différents bots.
 - `kernel` -> Noyaux gérant vos bots, plugins.
+- `client` -> Instance gérant la connexion d'un bot individuellement.
 - `plugin` -> Ajoute les fonctionnalités aux bots.
 - `token` -> Génère les tokens de connexion des bots.
 - `version` -> Récupère les dernières versions du jeu.

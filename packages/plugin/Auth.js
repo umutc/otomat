@@ -13,11 +13,11 @@ module.exports = {
     SocketConnected(ctx) {
       if (ctx.socket.serverType !== 'Login') return
       ctx.socket.send('connecting', {
-        language: ctx.settings.language,
+        language: ctx.credentials.language,
         server: 'login',
         client: 'android',
-        appVersion: ctx.settings.appVersion,
-        buildVersion: ctx.settings.buildVersion
+        appVersion: ctx.versions.appVersion,
+        buildVersion: ctx.versions.buildVersion
       })
     },
     ProtocolRequired() {},
@@ -29,8 +29,8 @@ module.exports = {
       ctx.socket.send('login', {
         key: this.key,
         salt: this.salt,
-        token: ctx.settings.token,
-        username: ctx.settings.login
+        token: ctx.credentials.token,
+        username: ctx.credentials.login
       })
     },
     IdentificationFailedMessage(ctx, { reason }) {},
@@ -40,7 +40,7 @@ module.exports = {
   },
   methods: {
     begin(ctx) {
-      ctx.socket.connect('Login', ctx.settings.sticker)
+      ctx.socket.connect('Login', ctx.credentials.sticker)
       return this._wrapper.once('ServersListMessage')
     },
     play(ctx, serverId) {

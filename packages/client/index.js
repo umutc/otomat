@@ -25,9 +25,9 @@ module.exports = class Client {
     delete this.credentials.password
     logger.await('[2/3] - Retrieving account token')
     const { token } = await Tokens.createToken({ game: 18 }, key)
-    this.settings.sticker = generateString(15)
-    this.settings.clientKey = generateString(20)
-    this.settings.token = token
+    this.credentials.sticker = generateString(15)
+    this.credentials.clientKey = generateString(20)
+    this.credentials.token = token
     logger.success('[3/3] - Authenticated')
   }
 }
