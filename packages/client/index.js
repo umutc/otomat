@@ -4,20 +4,25 @@ const { generateString } = require('./libs/hash')
 const { Signale } = require('signale')
 
 module.exports = class Client {
-  constructor(settings) {
-    this._password = settings.password
-    delete settings.password
-
-    this.settings = settings
-    this.socket = new Socket()
+  /**
+   * 
+   * @param {String} login
+   * @param {String} password
+   * @param {String} language
+   * @param {Object} versions
+   */
+  constructor(login, password, language, versions = {}) {
+    this.credentials = { login, password, language }
+    this.versions = versions
     this.data = {}
+    this.socket = new Socket()
   }
 
   async connect() {
     const logger = new Signale({ interactive: true })
     logger.await('[1/3] - Retrieving API key')
-    const { key } = await Tokens.createApiKey(this.settings.login, this._password, false)
-    delete this._password
+    const { key } = await Tokens.createApiKey(this.credentials.login, this.credentials.password, false)
+    delete this.credentials.password
     logger.await('[2/3] - Retrieving account token')
     const { token } = await Tokens.createToken({ game: 18 }, key)
     this.settings.sticker = generateString(15)

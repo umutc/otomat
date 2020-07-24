@@ -1,5 +1,3 @@
-const Client = require('./index')
-
 module.exports = class ClientLoader {
   constructor(kernel) {
     this.kernel = kernel
@@ -11,21 +9,17 @@ module.exports = class ClientLoader {
   }
 
   /**
-   * @param {Object} ctx 
-   * @param {String} ctx.login
-   * @param {String} ctx.password
-   * @param {String} ctx.language
+   * @param {import('@dofus-remote/client')} client 
    */
-  add({ login, password, language }) {
-    if (this.clients.has(login)) return null
-    const options = Object.assign({}, { login, password, language }, this.kernel.versions)
-    const client = new Client(options)
-    this.clients.set(login, client)
+  add(client) {
+    if (this.clients.has(client.credentials.login)) return null
+    client.versions = this.kernel.versions
+    this.clients.set(client.credentials.login, client)
     return client
   }
 
   /**
-   * @param {string} login 
+   * @param {String} login 
    */
   remove(login) {
     this.clients.remove(login)

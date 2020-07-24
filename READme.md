@@ -14,27 +14,28 @@ Invitation Discord: https://discord.gg/Ctg86d4
 ## Exemple
 ```js
 const Kernel = require('@dofus-remote/kernel')
+const Client = require('@dofus-remote/client')
 const Version = require('@dofus-remote/version')
 const AuthPlugin = require('@dofus-remote/plugin/Auth')
 const GamePlugin = require('@dofus-remote/plugin/Game')
 
 async function run(login, password, country, language, serverId, characterId) {
-    const version = await Version.get(country, language)
-    const kernel = new Kernel(version)
-    kernel.plugins.add(AuthPlugin)
-    kernel.plugins.add(GamePlugin)
-    kernel.clients.add({ login, password, language })
-    kernel.plugins.flush()
-    
-    for (const client of kernel.clients) {
-        await client.connect()
-        await kernel.api.auth.begin(client)
-        await kernel.api.auth.play(client, serverId)
-        await kernel.api.game.play(client, characterId)
-    }
+  const version = await Version.get(country, language)
+  const kernel = new Kernel(version)
+  kernel.plugins.add(AuthPlugin)
+  kernel.plugins.add(GamePlugin)
+  kernel.clients.add(new Client(login, password, country))
+  kernel.plugins.flush()
+  
+  for (const client of kernel.clients) {
+    await client.connect()
+    await kernel.api.auth.begin(client)
+    await kernel.api.auth.play(client, serverId)
+    await kernel.api.game.play(client, characterId)
+  }
 }
 
 run('login', 'password', 'country', 'language', 0, 0)
-    .then(console.log)
-    .catch(console.error)
+  .then(console.log)
+  .catch(console.error)
 ```

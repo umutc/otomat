@@ -1,6 +1,7 @@
 const Kernel = require('@dofus-remote/kernel')
-const AuthPlugin = require('@dofus-remote/plugins/Auth')
-const GamePlugin = require('@dofus-remote/plugins/Game')
+const Client = require('@dofus-remote/client')
+const AuthPlugin = require('@dofus-remote/plugin/Auth')
+const GamePlugin = require('@dofus-remote/plugin/Game')
 
 ;(async () => {
   const config = await require('./config')()
@@ -8,7 +9,11 @@ const GamePlugin = require('@dofus-remote/plugins/Game')
 
   kernel.plugins.add(AuthPlugin)
   kernel.plugins.add(GamePlugin)
-  kernel.clients.add(config.account)
+  kernel.clients.add(new Client(
+    config.account.login,
+    config.account.password,
+    config.account.language
+  ))
   kernel.plugins.flush()
 
   for (const client of kernel.clients) {
